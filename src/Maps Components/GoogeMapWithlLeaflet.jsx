@@ -3,7 +3,7 @@ import { MapContainer, Tooltip, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// --- Define colors for stats (consistent legend) ---
+// Define colors for each stat type
 const statColors = {
   population: "#FFD700", // Gold
   revenue: "#1E90FF",    // DodgerBlue
