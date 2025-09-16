@@ -50,7 +50,7 @@ const generateDonutSVG = (stats, radius = 20, thickness = 8) => {
 
 // Google Maps Tile Layer component using leaflet's L.tileLayer
 const GoogleMapsTileLayer = ({ apiKey }) => {
-  const map = useMap();
+  const map = useMap(); // gives the map instance of the nearest MapContainer so we can use any Leaflet api on it
 
   useEffect(() => {
     const tileLayer = L.tileLayer(
@@ -76,26 +76,26 @@ const DonutMarker = ({ position, stats }) => {
 
   useEffect(() => {
     const handleZoom = () => setZoom(map.getZoom());
-    map.on("zoomend", handleZoom);
+    map.on("zoomend", handleZoom); // this means “when the zoom action finishes, call handleZoom”
     return () => {
-      map.off("zoomend", handleZoom);
+      map.off("zoomend", handleZoom); // removes the event listener with map.off when the component unmounts
     };
   }, [map]);
 
   // scale radius with zoom level of map layer
-  const baseRadius = 18;
-  const scaledRadius = Math.max(8, baseRadius * (zoom / 10));
+  const baseRadius = 18; // Sets a base size for the donut marker
+  const scaledRadius = Math.max(8, baseRadius * (zoom / 10)); // Scales it with zoom level: zoom / 10 → higher zoom → bigger marker and doesn't shrink below 8 px if user zooms out a lot
 
   const icon = L.divIcon({
-    html: generateDonutSVG(stats, scaledRadius, 8),
+    html: generateDonutSVG(stats, scaledRadius, 8), // an SVG string returned by generateDonutSVG, which draws the donut chart based on stats
     className: "",
-    iconSize: [scaledRadius * 2, scaledRadius * 2],
-    iconAnchor: [scaledRadius, scaledRadius],
+    iconSize: [scaledRadius * 2, scaledRadius * 2], // width/height of the marker (doubled radius)
+    iconAnchor: [scaledRadius, scaledRadius], // sets the “center point” of the icon so it aligns correctly with the map coordinates
   });
 
   return (
     <Marker position={position} icon={icon}>
-      <Tooltip direction="top" offset={[0, -10]} opacity={1}>
+      <Tooltip direction="top" offset={[0, -10]} opacity={1}> // appears above the marker, moves tooltip up a bit, fully visible
         <div style={{ fontSize: "0.8rem" }}>
           <strong>Stats</strong>
           <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
