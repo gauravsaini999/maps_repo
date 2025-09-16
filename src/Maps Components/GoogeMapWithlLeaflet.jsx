@@ -10,7 +10,7 @@ const statColors = {
   growth: "#32CD32",     // LimeGreen
 };
 
-// --- Utility: Generate SVG donut pie chart ---
+// Utility to generate SVG based donut pie charts
 const generateDonutSVG = (stats, radius = 20, thickness = 8) => {
   const total = Object.values(stats).reduce((a, b) => a + b, 0);
   let cumulative = 0;
@@ -48,7 +48,7 @@ const generateDonutSVG = (stats, radius = 20, thickness = 8) => {
   `;
 };
 
-// --- Google Maps Tile Layer component ---
+// Google Maps Tile Layer component using leaflet's L.tileLayer
 const GoogleMapsTileLayer = ({ apiKey }) => {
   const map = useMap();
 
@@ -69,7 +69,7 @@ const GoogleMapsTileLayer = ({ apiKey }) => {
   return null;
 };
 
-// --- Donut Marker component with zoom scaling ---
+// Donut Marker component with zoom scaling such that donut markers scale in size as user zooms in/out
 const DonutMarker = ({ position, stats }) => {
   const map = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
@@ -82,7 +82,7 @@ const DonutMarker = ({ position, stats }) => {
     };
   }, [map]);
 
-  // scale radius with zoom
+  // scale radius with zoom level of map layer
   const baseRadius = 18;
   const scaledRadius = Math.max(8, baseRadius * (zoom / 10));
 
@@ -111,15 +111,15 @@ const DonutMarker = ({ position, stats }) => {
   );
 };
 
-// --- Main Component ---
+// Main Map Component
 const MapWithDonutMarkers = () => {
   const googleApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; // replace with your key
 
-  // Base location: New Delhi
+  // Base location as New Delhi
   const baseLat = 28.6139;
   const baseLng = 77.2090;
 
-  // Generate 10 nearby markers
+  // Now, Generate 10 nearby markers
   const markers = Array.from({ length: 10 }, (_, i) => {
     const latOffset = (Math.random() - 0.5) * 0.05; // small random offset
     const lngOffset = (Math.random() - 0.5) * 0.05;
