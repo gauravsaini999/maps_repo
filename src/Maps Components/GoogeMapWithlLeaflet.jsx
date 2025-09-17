@@ -6,8 +6,8 @@ import L from "leaflet";
 // Define colors for each stat type
 const statColors = {
   population: "#FFD700", // Gold
-  revenue: "#1E90FF",    // DodgerBlue
-  growth: "#32CD32",     // LimeGreen
+  revenue: "#1E90FF", // DodgerBlue
+  growth: "#32CD32", // LimeGreen
 };
 
 // Utility to generate SVG based donut pie charts
@@ -42,7 +42,9 @@ const generateDonutSVG = (stats, radius = 20, thickness = 8) => {
   });
 
   return `
-    <svg width="${radius * 2}" height="${radius * 2}" viewBox="0 0 ${radius * 2} ${radius * 2}">
+    <svg width="${radius * 2}" height="${radius * 2}" viewBox="0 0 ${
+    radius * 2
+  } ${radius * 2}">
       ${paths.join("\n")}
     </svg>
   `;
@@ -56,7 +58,8 @@ const GoogleMapsTileLayer = ({ apiKey }) => {
     const tileLayer = L.tileLayer(
       `https://mts1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${apiKey}`,
       {
-        attribution: '&copy; <a href="https://maps.google.com/">Google Maps</a>',
+        attribution:
+          '&copy; <a href="https://maps.google.com/">Google Maps</a>',
         maxZoom: 20,
       }
     );
@@ -95,7 +98,8 @@ const DonutMarker = ({ position, stats }) => {
 
   return (
     <Marker position={position} icon={icon}>
-      <Tooltip direction="top" offset={[0, -10]} opacity={1}> // appears above the marker, moves tooltip up a bit, fully visible
+      {/* appears above the marker, moves tooltip up a bit, fully visible */}
+      <Tooltip direction="top" offset={[0, -10]} opacity={1}>
         <div style={{ fontSize: "0.8rem" }}>
           <strong>Stats</strong>
           <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
@@ -117,7 +121,7 @@ const MapWithDonutMarkers = () => {
 
   // Base location as New Delhi
   const baseLat = 28.6139;
-  const baseLng = 77.2090;
+  const baseLng = 77.209;
 
   // Now, Generate 10 nearby markers
   const markers = Array.from({ length: 10 }, (_, i) => {
